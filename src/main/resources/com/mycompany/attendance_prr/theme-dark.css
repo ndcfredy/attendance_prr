@@ -1,0 +1,35 @@
+/* DARK theme: black surfaces, red accent */
+.root {
+    -app-bg: #1a1a1a;
+    -app-sidebar: #1f1f1f;
+    -app-surface: #272727;
+    -app-surface-2: #303030;
+    -app-input: #1b1b1b;
+    -app-border: #4a2a2d;
+    -app-text: #f2f2f2;
+    -app-muted: #a9a9a9;
+    -app-accent: #8f1d22;
+    -app-accent-hover: #a8242a;
+    -app-accent-soft: #4b2327;
+    -app-accent-text: #e57373;
+    -app-head: #4a2428;
+    -app-row-alt: #2c2c2c;
+    -app-ok: #2ecc71;
+    -app-warn: #f5a623;
+    -app-bad: #e06666;
+    -app-ok-bg: #1d3b2b;
+    -app-warn-bg: #4a3a17;
+    -app-bad-bg: #4a2222;
+
+    -fx-base: #2b2b2b;
+    -fx-background: #1a1a1a;
+    -fx-control-inner-background: #1f1f1f;
+    -fx-control-inner-background-alt: #252525;
+    -fx-accent: #8f1d22;
+    -fx-focus-color: #c0262d;
+    -fx-faint-focus-color: transparent;
+    -fx-text-base-color: #f2f2f2;
+    -fx-text-background-color: #f2f2f2;
+    -fx-text-inner-color: #f2f2f2;
+    -fx-prompt-text-fill: #888888;
+}

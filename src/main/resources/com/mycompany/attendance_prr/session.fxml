@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="sessionRoot" fx:controller="app.ui.SessionController">
+   <ScrollPane fx:id="pageScroll" fitToWidth="true" hbarPolicy="NEVER" styleClass="transparent-scroll">
+      <VBox fx:id="sessionContent" spacing="16">
+         <padding><Insets top="20" right="24" bottom="20" left="24"/></padding>
+
+         <!-- Header: course, status, pause / check-out -->
+         <HBox alignment="CENTER_LEFT" spacing="12" styleClass="card">
+            <VBox spacing="6" HBox.hgrow="ALWAYS">
+               <HBox alignment="CENTER_LEFT" spacing="12">
+                  <Label fx:id="courseLabel" styleClass="title" text="[COURSE UNIT]"/>
+                  <Label fx:id="statusBadge" styleClass="badge-ok" text="In progress"/>
+               </HBox>
+               <Label fx:id="sessionMetaLabel" styleClass="muted" text="Lecture - Group [GROUP] - Room [ROOM]"/>
+            </VBox>
+            <Button fx:id="btnPause" styleClass="btn-outline" text="Pause" onAction="#onPause"/>
+            <Button fx:id="btnCheckout" styleClass="btn-primary" text="Check-out" onAction="#onCheckout"/>
+         </HBox>
+
+         <HBox spacing="16">
+            <!-- Left column: scan (mode A), QR (mode B), last scan -->
+            <VBox fx:id="leftColumn" spacing="16" minWidth="400" prefWidth="400" maxWidth="400">
+               <VBox fx:id="scanCard" spacing="10" styleClass="card">
+                  <HBox alignment="CENTER_LEFT" spacing="8">
+                     <Label styleClass="section-title" text="Scan student card"/>
+                     <Region HBox.hgrow="ALWAYS"/>
+                     <ChoiceBox fx:id="modeChoice" prefWidth="170"/>
+                  </HBox>
+                  <StackPane fx:id="scanArea" styleClass="scan-area" prefHeight="210" minHeight="210" maxHeight="210">
+                     <SVGPath fx:id="scanPlaceholder" styleClass="icon" scaleX="4" scaleY="4" content="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 0h2v6h-6v-2h4v-4zM8 8h3v3H8V8zm5 0h3v3h-3V8zm-5 5h3v3H8v-3z"/>
+                     <ImageView fx:id="scanPreview" fitWidth="340" fitHeight="205" preserveRatio="true"/>
+                  </StackPane>
+                  <HBox spacing="8">
+                     <TextField fx:id="scanInputField" promptText="2D scanner / paste card text, then Enter" HBox.hgrow="ALWAYS" onAction="#onScanInput"/>
+                     <ToggleButton fx:id="btnCamera" styleClass="btn-outline" text="Camera" onAction="#onToggleCamera"/>
+                  </HBox>
+                  <Label fx:id="scanHintLabel" styleClass="muted" wrapText="true" text="Hold the card in front of the camera - the photo appears below"/>
+               </VBox>
+
+               <VBox fx:id="qrCard" spacing="10" styleClass="card" alignment="TOP_CENTER" visible="false" managed="false">
+                  <Label styleClass="section-title" wrapText="true" text="Dynamic QR code (students scan with the phone app)"/>
+                  <ImageView fx:id="qrView" fitWidth="230" fitHeight="230" preserveRatio="true"/>
+                  <ProgressBar fx:id="qrTimerBar" prefWidth="230" progress="1.0"/>
+                  <Label fx:id="qrCaptionLabel" styleClass="muted" text="Changes every 10 seconds"/>
+                  <HBox spacing="8" alignment="CENTER">
+                     <Button fx:id="btnQrFullscreen" styleClass="btn-outline" text="Project full screen" onAction="#onQrFullscreen"/>
+                     <Button fx:id="btnExitCheck" styleClass="btn-outline" text="Exit check (60 s)" onAction="#onExitCheck"/>
+                  </HBox>
+               </VBox>
+
+               <VBox spacing="10" styleClass="card">
+                  <Label styleClass="section-title" text="Last scan - check the photo"/>
+                  <HBox spacing="14">
+                     <StackPane fx:id="lastPhotoBox" styleClass="photo-box" minWidth="90" minHeight="90" prefWidth="90" prefHeight="90" maxWidth="90" maxHeight="90">
+                        <SVGPath fx:id="lastPhotoPlaceholder" styleClass="icon" scaleX="2.4" scaleY="2.4" content="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/>
+                        <ImageView fx:id="lastPhoto" fitWidth="90" fitHeight="90" preserveRatio="true"/>
+                     </StackPane>
+                     <VBox spacing="4" HBox.hgrow="ALWAYS">
+                        <Label fx:id="lastNameLabel" styleClass="section-title" text="[STUDENT NAME]"/>
+                        <Label fx:id="lastIdLabel" styleClass="muted" text="ID: [STUDENT ID]"/>
+                        <Label fx:id="lastSignatureLabel" text="Signature valid"/>
+                        <Label fx:id="lastWifiLabel" text="Wi-Fi: Building B verified"/>
+                        <Label fx:id="lastMessageLabel" wrapText="true"/>
+                     </VBox>
+                  </HBox>
+                  <HBox spacing="10">
+                     <Button fx:id="btnConfirm" styleClass="btn-primary" text="Confirm present" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#onConfirm"/>
+                     <Button fx:id="btnReject" styleClass="btn-outline" text="Reject" HBox.hgrow="ALWAYS" maxWidth="Infinity" onAction="#onReject"/>
+                  </HBox>
+               </VBox>
+            </VBox>
+
+            <!-- Right column: live attendance table -->
+            <VBox fx:id="rosterCard" spacing="12" styleClass="card" HBox.hgrow="ALWAYS" minHeight="600">
+               <HBox alignment="CENTER_LEFT" spacing="14">
+                  <Label styleClass="section-title" text="Students"/>
+                  <Label fx:id="summaryLabel" styleClass="muted" text="Present 0 - Late 0 - Absent 0 - Total 0"/>
+                  <Region HBox.hgrow="ALWAYS"/>
+                  <TextField fx:id="searchField" promptText="Search a student" prefWidth="170"/>
+               </HBox>
+               <HBox fx:id="statBar" styleClass="stat-bar" prefHeight="8" minHeight="8" maxHeight="8">
+                  <Region fx:id="barPresent" styleClass="bar-present" prefWidth="0"/>
+                  <Region fx:id="barLate" styleClass="bar-late" prefWidth="0"/>
+                  <Region fx:id="barAbsent" styleClass="bar-absent" prefWidth="0"/>
+               </HBox>
+               <TableView fx:id="rosterTable" VBox.vgrow="ALWAYS" minHeight="420">
+                  <columns>
+                     <TableColumn fx:id="colName" text="Name" prefWidth="230"/>
+                     <TableColumn fx:id="colId" text="ID" prefWidth="120"/>
+                     <TableColumn fx:id="colTime" text="Time" prefWidth="80"/>
+                     <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+                     <TableColumn fx:id="colWifi" text="Wi-Fi" prefWidth="130"/>
+                  </columns>
+                  <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+               </TableView>
+               <HBox alignment="CENTER_LEFT" spacing="10">
+                  <Label fx:id="footerNoteLabel" styleClass="muted" text="Manual corrections need a reason"/>
+                  <Region HBox.hgrow="ALWAYS"/>
+                  <Button fx:id="btnSpotCheck" styleClass="btn-outline" text="Spot check (5 names)" onAction="#onSpotCheck"/>
+                  <Button fx:id="btnManualCorrection" styleClass="btn-outline" text="Manual correction" onAction="#onManualCorrection"/>
+               </HBox>
+            </VBox>
+         </HBox>
+
+         <!-- Teaching log -->
+         <HBox fx:id="logCard" spacing="24" styleClass="card">
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+               <Label styleClass="section-title" text="Teaching log - topics covered today"/>
+               <FlowPane fx:id="topicFlow" hgap="10" vgap="8"/>
+               <Button fx:id="btnAddTopic" styleClass="chip-add" text="+ Add topic from course plan" onAction="#onAddTopic"/>
+               <Hyperlink fx:id="linkDetails" text="Activities - Assignments - Resources - Remarks" onAction="#onLogDetails"/>
+            </VBox>
+            <VBox spacing="10" prefWidth="360" minWidth="360">
+               <Label styleClass="section-title" text="Class representative"/>
+               <Label fx:id="repStatusLabel" styleClass="warn-text" wrapText="true" text="Waiting for countersignature"/>
+               <Button fx:id="btnCountersign" styleClass="btn-outline" text="Class rep: scan card to countersign" maxWidth="Infinity" onAction="#onCountersign"/>
+               <Button fx:id="btnSaveLog" styleClass="btn-primary" text="Save teaching log" maxWidth="Infinity" onAction="#onSaveLog"/>
+            </VBox>
+         </HBox>
+      </VBox>
+   </ScrollPane>
+
+   <!-- Shown when no session is in progress -->
+   <VBox fx:id="noSessionBox" alignment="CENTER" spacing="14" visible="false" managed="false" styleClass="login-root">
+      <Label fx:id="noSessionLabel" styleClass="title" text="No session in progress"/>
+      <Label styleClass="muted" text="Open My timetable, pick today's session and check in with your staff card."/>
+      <Button fx:id="btnGoTimetable" styleClass="btn-primary" text="Go to my timetable" onAction="#onGoTimetable"/>
+   </VBox>
+</StackPane>

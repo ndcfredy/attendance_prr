@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="adminRoot" spacing="16" fx:controller="app.ui.AdminController">
+   <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+   <Label styleClass="page-title" text="Administration"/>
+   <TabPane fx:id="adminTabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+      <!-- Wi-Fi access point register -->
+      <Tab fx:id="tabAp" text="Wi-Fi access points">
+         <HBox spacing="16">
+            <VBox spacing="10" styleClass="card" HBox.hgrow="ALWAYS">
+               <TableView fx:id="apTable" VBox.vgrow="ALWAYS">
+                  <columns>
+                     <TableColumn fx:id="colApBssid" text="Identifier (BSSID)" prefWidth="170"/>
+                     <TableColumn fx:id="colApBuilding" text="Building" prefWidth="120"/>
+                     <TableColumn fx:id="colApZone" text="Room / zone" prefWidth="170"/>
+                     <TableColumn fx:id="colApStatus" text="Status" prefWidth="90"/>
+                  </columns>
+                  <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+               </TableView>
+               <Button fx:id="btnApRetire" styleClass="btn-outline" text="Retire / reactivate selected" onAction="#onApRetire"/>
+            </VBox>
+            <VBox spacing="10" styleClass="card" minWidth="340" prefWidth="340" maxWidth="340">
+               <Label styleClass="section-title" text="Register an access point"/>
+               <TextField fx:id="apBssidField" promptText="aa:bb:cc:dd:ee:ff"/>
+               <ChoiceBox fx:id="apBuildingChoice" maxWidth="Infinity"/>
+               <TextField fx:id="apZoneField" promptText="Room or coverage zone (optional)"/>
+               <Button fx:id="btnApAdd" styleClass="btn-primary" text="Register" onAction="#onApAdd"/>
+               <Separator/>
+               <Label fx:id="apCurrentLabel" styleClass="muted" wrapText="true" text="Current access point: –"/>
+               <Button fx:id="btnApDetect" styleClass="btn-outline" text="Use the Wi-Fi I am connected to" onAction="#onApDetect"/>
+            </VBox>
+         </HBox>
+      </Tab>
+
+      <!-- Cards and signing keys -->
+      <Tab fx:id="tabCards" text="Cards &amp; keys">
+         <VBox spacing="12" styleClass="card">
+            <Label fx:id="keyStatusLabel" wrapText="true" text="Checking signing key…"/>
+            <HBox spacing="10">
+               <Button fx:id="btnGenKeys" styleClass="btn-outline" text="Generate signing keys" onAction="#onGenKeys"/>
+               <Button fx:id="btnSignAll" styleClass="btn-outline" text="Sign all cards" onAction="#onSignAll"/>
+               <Button fx:id="btnExportAllCards" styleClass="btn-primary" text="Export all student cards (PNG)" onAction="#onExportAllCards"/>
+               <Button fx:id="btnExportStaffCards" styleClass="btn-primary" text="Export staff cards (PNG)" onAction="#onExportStaffCards"/>
+            </HBox>
+            <ProgressBar fx:id="cardProgress" maxWidth="Infinity" progress="0"/>
+            <TextArea fx:id="cardLog" editable="false" VBox.vgrow="ALWAYS"/>
+         </VBox>
+      </Tab>
+
+      <!-- Staff accounts -->
+      <Tab fx:id="tabStaff" text="Staff accounts">
+         <HBox spacing="16">
+            <VBox styleClass="card" HBox.hgrow="ALWAYS">
+               <TableView fx:id="staffTable" VBox.vgrow="ALWAYS">
+                  <columns>
+                     <TableColumn fx:id="colSCode" text="Staff ID" prefWidth="100"/>
+                     <TableColumn fx:id="colSName" text="Name" prefWidth="200"/>
+                     <TableColumn fx:id="colSUser" text="Username" prefWidth="110"/>
+                     <TableColumn fx:id="colSRole" text="Role" prefWidth="90"/>
+                     <TableColumn fx:id="colSEmp" text="Status" prefWidth="100"/>
+                  </columns>
+                  <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+               </TableView>
+            </VBox>
+            <VBox spacing="10" styleClass="card" minWidth="340" prefWidth="340" maxWidth="340">
+               <Label styleClass="section-title" text="Staff member"/>
+               <TextField fx:id="sCodeField" promptText="Staff ID (e.g. STF-010)"/>
+               <TextField fx:id="sNameField" promptText="Full name"/>
+               <TextField fx:id="sUserField" promptText="Username"/>
+               <PasswordField fx:id="sPassField" promptText="Password (leave empty to keep)"/>
+               <ChoiceBox fx:id="sRoleChoice" maxWidth="Infinity"/>
+               <ChoiceBox fx:id="sEmpChoice" maxWidth="Infinity"/>
+               <TextField fx:id="sDeptField" promptText="Department"/>
+               <HBox spacing="8">
+                  <Button fx:id="btnSNew" styleClass="btn-outline" text="New" onAction="#onStaffNew"/>
+                  <Button fx:id="btnSSave" styleClass="btn-primary" text="Save" onAction="#onStaffSave"/>
+                  <Button fx:id="btnSCard" styleClass="btn-outline" text="Export card" onAction="#onStaffCard"/>
+                  <Button fx:id="btnSCopy" styleClass="btn-outline" text="Copy card text" onAction="#onStaffCopy"/>
+               </HBox>
+            </VBox>
+         </HBox>
+      </Tab>
+
+      <!-- Settings -->
+      <Tab fx:id="tabSettings" text="Settings">
+         <VBox spacing="12" styleClass="card" maxWidth="620">
+            <Label styleClass="section-title" text="Attendance rules (this computer)"/>
+            <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Late after (minutes from actual start)" prefWidth="290"/><Spinner fx:id="lateSpinner" editable="true" prefWidth="90"/></HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Absence alert threshold (%)" prefWidth="290"/><Spinner fx:id="absSpinner" editable="true" prefWidth="90"/></HBox>
+            <HBox spacing="10" alignment="CENTER_LEFT"><Label text="Simulated BSSID (testing only)" prefWidth="290"/><TextField fx:id="simBssidField" promptText="empty = real Wi-Fi" HBox.hgrow="ALWAYS"/></HBox>
+            <Separator/>
+            <Label styleClass="section-title" text="Database connection"/>
+            <TextField fx:id="dbUrlField" promptText="JDBC URL"/>
+            <HBox spacing="10"><TextField fx:id="dbUserField" promptText="User" HBox.hgrow="ALWAYS"/><PasswordField fx:id="dbPassField" promptText="Password" HBox.hgrow="ALWAYS"/></HBox>
+            <HBox spacing="10">
+               <Button fx:id="btnTestDb" styleClass="btn-outline" text="Test connection" onAction="#onTestDb"/>
+               <Button fx:id="btnSaveSettings" styleClass="btn-primary" text="Save settings" onAction="#onSaveSettings"/>
+            </HBox>
+            <Label fx:id="settingsInfoLabel" styleClass="muted" wrapText="true"/>
+         </VBox>
+      </Tab>
+   </TabPane>
+</VBox>

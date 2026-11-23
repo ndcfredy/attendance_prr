@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="shellRoot" fx:controller="app.ui.MainController">
+   <top>
+      <HBox fx:id="topBar" alignment="CENTER_LEFT" spacing="14" styleClass="topbar">
+         <SVGPath fx:id="appIcon" styleClass="icon" scaleX="1.5" scaleY="1.5" content="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 0h2v6h-6v-2h4v-4zM8 8h3v3H8V8zm5 0h3v3h-3V8zm-5 5h3v3H8v-3z"/>
+         <Label fx:id="appTitleLabel" styleClass="section-title" text="Attendance &amp; Teaching Log">
+            <padding><Insets left="8"/></padding>
+         </Label>
+         <Region HBox.hgrow="ALWAYS"/>
+         <Circle fx:id="connectionDot" styleClass="dot" radius="5"/>
+         <Label fx:id="connectionLabel" text="Offline"/>
+         <Label fx:id="wifiLabel" styleClass="muted" text="No campus Wi-Fi"/>
+         <Label fx:id="userLabel" styleClass="section-title" text="[USER]"/>
+         <ToggleButton fx:id="btnTheme" styleClass="btn-outline" text="Light theme" onAction="#onToggleTheme"/>
+         <Button fx:id="btnLogout" styleClass="btn-outline" text="Sign out" onAction="#onLogout"/>
+      </HBox>
+   </top>
+   <left>
+      <VBox fx:id="sidebar" spacing="6" styleClass="sidebar">
+         <Button fx:id="navSession" styleClass="nav-button" text="Current session" onAction="#onNav"/>
+         <Button fx:id="navTimetable" styleClass="nav-button" text="My timetable" onAction="#onNav"/>
+         <Button fx:id="navStudents" styleClass="nav-button" text="Students" onAction="#onNav"/>
+         <Button fx:id="navTeachingLog" styleClass="nav-button" text="Teaching log" onAction="#onNav"/>
+         <Button fx:id="navSyllabus" styleClass="nav-button" text="Syllabus coverage" onAction="#onNav"/>
+         <Button fx:id="navReports" styleClass="nav-button" text="Reports" onAction="#onNav"/>
+         <Button fx:id="navJustifications" styleClass="nav-button" text="Justifications" onAction="#onNav"/>
+         <Button fx:id="navAdmin" styleClass="nav-button" text="Administration" onAction="#onNav"/>
+         <Region VBox.vgrow="ALWAYS"/>
+         <Button fx:id="navKiosk" styleClass="nav-button" text="Kiosk mode" onAction="#onNav"/>
+         <Label fx:id="pendingLabel" styleClass="warn-text" wrapText="true" maxWidth="230"/>
+      </VBox>
+   </left>
+   <center>
+      <StackPane fx:id="contentHost"/>
+   </center>
+</BorderPane>

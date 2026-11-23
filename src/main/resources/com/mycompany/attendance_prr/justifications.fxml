@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="justifRoot" spacing="16" fx:controller="app.ui.JustificationsController">
+   <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+   <HBox alignment="CENTER_LEFT" spacing="10">
+      <Label styleClass="page-title" text="Absence justifications"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <ChoiceBox fx:id="statusFilter" prefWidth="140"/>
+      <Button fx:id="btnNewJustif" styleClass="btn-primary" text="New justification" onAction="#onNewJustif"/>
+   </HBox>
+   <VBox spacing="12" styleClass="card" VBox.vgrow="ALWAYS">
+      <TableView fx:id="justifTable" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="colJStudent" text="Student" prefWidth="180"/>
+            <TableColumn fx:id="colJCourse" text="Course unit" prefWidth="240"/>
+            <TableColumn fx:id="colJDate" text="Session" prefWidth="100"/>
+            <TableColumn fx:id="colJReason" text="Reason" prefWidth="240"/>
+            <TableColumn fx:id="colJDoc" text="Document" prefWidth="150"/>
+            <TableColumn fx:id="colJStatus" text="Status" prefWidth="100"/>
+         </columns>
+         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+      </TableView>
+      <HBox spacing="10" alignment="CENTER_RIGHT">
+         <Button fx:id="btnOpenDoc" styleClass="btn-outline" text="Open document" onAction="#onOpenDoc"/>
+         <Button fx:id="btnRejectJ" styleClass="btn-outline" text="Reject" onAction="#onReject"/>
+         <Button fx:id="btnAccept" styleClass="btn-primary" text="Accept" onAction="#onAccept"/>
+      </HBox>
+   </VBox>
+</VBox>

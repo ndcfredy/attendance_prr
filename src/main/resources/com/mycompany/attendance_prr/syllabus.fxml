@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="syllabusRoot" spacing="16" fx:controller="app.ui.SyllabusController">
+   <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+   <VBox spacing="12" styleClass="card" minWidth="420" prefWidth="420" maxWidth="420">
+      <Label styleClass="page-title" text="Course plan"/>
+      <ChoiceBox fx:id="courseChoice" maxWidth="Infinity"/>
+      <TreeView fx:id="planTree" VBox.vgrow="ALWAYS"/>
+      <VBox fx:id="editPane" spacing="8">
+         <Label styleClass="section-title" text="Add chapter"/>
+         <HBox spacing="8">
+            <TextField fx:id="chapterNumberField" promptText="No." prefWidth="60"/>
+            <TextField fx:id="chapterTitleField" promptText="Chapter title" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="chapterHoursField" promptText="Hours" prefWidth="70"/>
+         </HBox>
+         <Button fx:id="btnAddChapter" styleClass="btn-outline" text="Add chapter" onAction="#onAddChapter"/>
+         <Label styleClass="section-title" text="Add topic to the selected chapter"/>
+         <TextField fx:id="topicTitleField" promptText="Topic title"/>
+         <HBox spacing="8">
+            <Button fx:id="btnAddTopicToPlan" styleClass="btn-outline" text="Add topic" onAction="#onAddTopic"/>
+            <Button fx:id="btnDeleteNode" styleClass="btn-outline" text="Delete selected" onAction="#onDeleteNode"/>
+         </HBox>
+      </VBox>
+   </VBox>
+   <VBox spacing="14" styleClass="card" HBox.hgrow="ALWAYS">
+      <Label styleClass="page-title" text="Syllabus coverage"/>
+      <Label fx:id="coverageLabel" text="Topics delivered: –"/>
+      <ProgressBar fx:id="coverageBar" maxWidth="Infinity" progress="0"/>
+      <Label fx:id="hoursLabel" text="Hours delivered: –"/>
+      <Label fx:id="behindLabel" styleClass="bad-text" wrapText="true"/>
+      <TableView fx:id="coverageTable" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="colChapter" text="Chapter" prefWidth="260"/>
+            <TableColumn fx:id="colTopics" text="Topics done" prefWidth="110"/>
+            <TableColumn fx:id="colHours" text="Hours (delivered / planned)" prefWidth="190"/>
+            <TableColumn fx:id="colState" text="State" prefWidth="110"/>
+         </columns>
+         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+      </TableView>
+   </VBox>
+</HBox>

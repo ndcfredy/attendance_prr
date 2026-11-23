@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="timetableRoot" spacing="16" fx:controller="app.ui.TimetableController">
+   <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+   <HBox alignment="CENTER_LEFT" spacing="12">
+      <Label fx:id="titleLabel" styleClass="page-title" text="My timetable"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <ChoiceBox fx:id="lecturerChoice" prefWidth="200"/>
+      <ChoiceBox fx:id="viewChoice" prefWidth="100"/>
+      <DatePicker fx:id="datePicker" prefWidth="150"/>
+      <Button fx:id="btnRefresh" styleClass="btn-outline" text="Refresh" onAction="#onRefresh"/>
+   </HBox>
+   <VBox spacing="12" styleClass="card" VBox.vgrow="ALWAYS">
+      <TableView fx:id="sessionTable" VBox.vgrow="ALWAYS">
+         <columns>
+            <TableColumn fx:id="colDate" text="Date" prefWidth="100"/>
+            <TableColumn fx:id="colTime" text="Planned" prefWidth="110"/>
+            <TableColumn fx:id="colCourse" text="Course unit" prefWidth="280"/>
+            <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+            <TableColumn fx:id="colGroup" text="Group" prefWidth="90"/>
+            <TableColumn fx:id="colRoom" text="Room" prefWidth="90"/>
+            <TableColumn fx:id="colLecturer" text="Lecturer" prefWidth="170"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="110"/>
+         </columns>
+         <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+      </TableView>
+      <HBox alignment="CENTER_LEFT" spacing="10">
+         <Label fx:id="infoLabel" styleClass="muted" text="Sessions come from the timetable (Project 2). You can also add one here."/>
+         <Region HBox.hgrow="ALWAYS"/>
+         <Button fx:id="btnNewSession" styleClass="btn-outline" text="New session" onAction="#onNewSession"/>
+         <Button fx:id="btnReplace" styleClass="btn-outline" text="Replace lecturer" onAction="#onReplace"/>
+         <Button fx:id="btnOpen" styleClass="btn-outline" text="Open running session" onAction="#onOpen"/>
+         <Button fx:id="btnCheckIn" styleClass="btn-primary" text="Check-in (scan staff card)" onAction="#onCheckIn"/>
+      </HBox>
+   </VBox>
+</VBox>

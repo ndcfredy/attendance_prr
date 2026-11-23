@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="kioskRoot" styleClass="kiosk-root" spacing="24" fx:controller="app.ui.KioskController">
+   <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+   <HBox alignment="CENTER_LEFT" spacing="20">
+      <VBox spacing="4">
+         <Label fx:id="kioskTitle" styleClass="kiosk-title" text="Scan your student card"/>
+         <Label fx:id="kioskRoomLabel" styleClass="muted" text="Room"/>
+      </VBox>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Label fx:id="kioskClock" styleClass="kiosk-clock" text="00:00:00"/>
+   </HBox>
+   <HBox spacing="30" VBox.vgrow="ALWAYS">
+      <StackPane fx:id="kioskPreviewBox" styleClass="scan-area" prefWidth="640" minWidth="640" maxWidth="640" prefHeight="480">
+         <SVGPath fx:id="kioskScanIcon" styleClass="icon" scaleX="7" scaleY="7" content="M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 15h2v4h4v2H3v-6zm16 0h2v6h-6v-2h4v-4zM8 8h3v3H8V8zm5 0h3v3h-3V8zm-5 5h3v3H8v-3z"/>
+         <ImageView fx:id="kioskPreview" fitWidth="620" fitHeight="465" preserveRatio="true"/>
+      </StackPane>
+      <VBox fx:id="kioskResultBox" styleClass="kiosk-idle" alignment="CENTER" spacing="14" HBox.hgrow="ALWAYS">
+         <StackPane styleClass="photo-box" minWidth="170" minHeight="170" prefWidth="170" prefHeight="170" maxWidth="170" maxHeight="170">
+            <SVGPath fx:id="kioskPhotoPlaceholder" styleClass="icon" scaleX="4.5" scaleY="4.5" content="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm0 2c-4 0-8 2-8 5v1h16v-1c0-3-4-5-8-5z"/>
+            <ImageView fx:id="kioskPhoto" fitWidth="170" fitHeight="170" preserveRatio="true"/>
+         </StackPane>
+         <Label fx:id="kioskName" styleClass="kiosk-name" text="Welcome"/>
+         <Label fx:id="kioskMessage" styleClass="kiosk-msg" wrapText="true" text="Hold your card in front of the camera"/>
+         <Label fx:id="kioskWifi" styleClass="muted"/>
+      </VBox>
+   </HBox>
+   <HBox alignment="CENTER_LEFT" spacing="14">
+      <TextField fx:id="kioskScanField" promptText="2D scanner input" prefWidth="360" onAction="#onKioskScan"/>
+      <ToggleButton fx:id="kioskModeToggle" styleClass="btn-outline" text="Entry scan" onAction="#onKioskMode"/>
+      <Label fx:id="kioskSessionLabel" styleClass="muted" text="Looking for a session…"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Button fx:id="btnKioskExit" styleClass="btn-outline" text="Staff exit" onAction="#onKioskExit"/>
+   </HBox>
+</VBox>

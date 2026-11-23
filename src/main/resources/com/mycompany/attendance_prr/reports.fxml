@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:id="reportsRoot" spacing="16" fx:controller="app.ui.ReportsController">
+   <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+   <HBox alignment="CENTER_LEFT" spacing="10">
+      <Label styleClass="page-title" text="Reports"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Label styleClass="muted" text="From"/>
+      <DatePicker fx:id="fromDate" prefWidth="140"/>
+      <Label styleClass="muted" text="to"/>
+      <DatePicker fx:id="toDate" prefWidth="140"/>
+      <Button fx:id="btnRefresh" styleClass="btn-outline" text="Refresh" onAction="#onRefresh"/>
+      <Button fx:id="btnExport" styleClass="btn-primary" text="Export CSV" onAction="#onExport"/>
+   </HBox>
+   <TabPane fx:id="reportTabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+      <Tab fx:id="tabHours" text="Hours delivered">
+         <VBox styleClass="card">
+            <TableView fx:id="hoursTable" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colRLecturer" text="Lecturer" prefWidth="170"/>
+                  <TableColumn fx:id="colRCourse" text="Course unit" prefWidth="260"/>
+                  <TableColumn fx:id="colRSessions" text="Sessions" prefWidth="80"/>
+                  <TableColumn fx:id="colRPlanned" text="Planned (h)" prefWidth="100"/>
+                  <TableColumn fx:id="colRDelivered" text="Delivered (h)" prefWidth="110"/>
+                  <TableColumn fx:id="colRMissed" text="Missed" prefWidth="80"/>
+                  <TableColumn fx:id="colRReplaced" text="Replaced" prefWidth="80"/>
+               </columns>
+               <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+            </TableView>
+         </VBox>
+      </Tab>
+      <Tab fx:id="tabAbsences" text="Absences">
+         <VBox spacing="10" styleClass="card">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+               <Label text="Show students with at least"/>
+               <Spinner fx:id="thresholdSpinner" editable="true" prefWidth="90"/>
+               <Label text="percent unjustified absences in a course unit"/>
+            </HBox>
+            <TableView fx:id="absenceTable" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colAStudent" text="Student" prefWidth="190"/>
+                  <TableColumn fx:id="colACode" text="ID" prefWidth="110"/>
+                  <TableColumn fx:id="colACourse" text="Course unit" prefWidth="240"/>
+                  <TableColumn fx:id="colASessions" text="Sessions" prefWidth="80"/>
+                  <TableColumn fx:id="colAAbsent" text="Absent" prefWidth="70"/>
+                  <TableColumn fx:id="colAUnjust" text="Unjustified" prefWidth="90"/>
+                  <TableColumn fx:id="colARate" text="Rate" prefWidth="70"/>
+               </columns>
+               <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+            </TableView>
+         </VBox>
+      </Tab>
+      <Tab fx:id="tabAlerts" text="Alerts">
+         <VBox styleClass="card">
+            <ListView fx:id="alertList" VBox.vgrow="ALWAYS"/>
+         </VBox>
+      </Tab>
+   </TabPane>
+</VBox>
